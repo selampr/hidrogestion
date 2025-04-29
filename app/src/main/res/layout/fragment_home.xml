@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:text="Bienvenido, trabajador"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- Botón para registrar un nuevo corte -->
+    <Button
+        android:id="@+id/btn_nuevo_corte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:marginTop="24dp"
+        android:text="Nuevo Corte" />
+</LinearLayout>
