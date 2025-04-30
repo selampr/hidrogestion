@@ -1,9 +1,66 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.HidroGestion" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Tema principal -->
+    <style name="Theme.HidroGestion" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Colores principales -->
+        <item name="colorPrimary">#4A90E2</item> <!-- Azul suave -->
+        <item name="colorPrimaryVariant">#2D75C9</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <item name="colorSecondary">#A5D6A7</item> <!-- Verde pastel -->
+        <item name="colorSecondaryVariant">#81C784</item>
+        <item name="colorOnSecondary">#000000</item>
+
+        <!-- Fondo y superficie -->
+        <item name="android:windowBackground">#F5F7FA</item>
+        <item name="colorBackground">#F5F7FA</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnBackground">#333333</item>
+        <item name="colorOnSurface">#333333</item>
+
+        <!-- Fuente y forma -->
+        <item name="android:fontFamily">@font/poppins_font</item> <!-- Asegúrate de tener esta fuente -->
+        <item name="shapeAppearanceSmallComponent">@style/Shape.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/Shape.Medium</item>
+
+        <!-- Botones -->
+        <item name="buttonStyle">@style/Widget.HidroGestion.Button</item>
     </style>
 
-    <style name="Theme.HidroGestion" parent="Base.Theme.HidroGestion" />
+    <!-- Botón personalizado -->
+    <style name="Widget.HidroGestion.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">#4A90E2</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- Bordes redondeados -->
+    <style name="Shape.Small" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="Shape.Medium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="Theme.HidroGestion.dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#90CAF9</item>
+        <item name="colorPrimaryVariant">#64B5F6</item>
+        <item name="colorOnPrimary">#000000</item>
+
+        <item name="colorSecondary">#A5D6A7</item>
+        <item name="colorSecondaryVariant">#81C784</item>
+        <item name="colorOnSecondary">#000000</item>
+
+        <item name="colorBackground">#121212</item>
+        <item name="colorSurface">#1E1E1E</item>
+        <item name="colorOnBackground">#FFFFFF</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+
+        <item name="android:fontFamily">@font/poppins_font</item>
+        <item name="shapeAppearanceSmallComponent">@style/Shape.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/Shape.Medium</item>
+        <item name="buttonStyle">@style/Widget.HidroGestion.Button</item>
+    </style>
 </resources>
