@@ -2,9 +2,10 @@
     <!-- Tema principal -->
     <style name="Theme.HidroGestion" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Colores principales -->
-        <item name="colorPrimary">#4A90E2</item> <!-- Azul suave -->
+        <item name="colorPrimary">#C8D4E2</item> <!-- Azul suave -->
         <item name="colorPrimaryVariant">#2D75C9</item>
         <item name="colorOnPrimary">#FFFFFF</item>
+
 
         <item name="colorSecondary">#A5D6A7</item> <!-- Verde pastel -->
         <item name="colorSecondaryVariant">#81C784</item>
@@ -18,7 +19,7 @@
         <item name="colorOnSurface">#333333</item>
 
         <!-- Fuente y forma -->
-        <item name="android:fontFamily">@font/poppins_font</item> <!-- Asegúrate de tener esta fuente -->
+        <item name="android:fontFamily">@font/poppins</item> <!-- Asegúrate de tener esta fuente -->
         <item name="shapeAppearanceSmallComponent">@style/Shape.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/Shape.Medium</item>
 

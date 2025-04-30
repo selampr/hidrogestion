@@ -46,7 +46,11 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.androidx.ui.text.android)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.room.runtime.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.material.v190)
+
 }
