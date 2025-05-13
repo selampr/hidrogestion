@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="tfg.selampr.hidrogestion.ui.fragments.HomeFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/mapaFragment"
+        android:name="tfg.selampr.hidrogestion.ui.fragments.MapaFragment"
+        android:label="Mapa"
+        tools:layout="@layout/fragment_corte" />
+
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="tfg.selampr.hidrogestion.ui.fragments.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
+
+</navigation>

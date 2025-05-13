@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">HidroGestion</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="recientes">Recientes</string>
+    <string name="motivo">Motivo</string>
+    <string name="titulo" />
+    <string name="descripcion" />
+    <string name="hora" />
+    <string name="logoInicio" />
+    <string name="profile_photo" />
+    <string name="log_out">LOG OUT</string>
+    <string name="GUARDAR" />
+    <string name="guardar">GUARDAR</string>
 </resources>

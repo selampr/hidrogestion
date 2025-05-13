@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_theme"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="30dp">
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir nuevo"
+            android:fontFamily="@font/poppins_light"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CORTE DE AGUA"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="22sp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/black" />
+
+        <!-- Mapa (fragmento de Google Maps) -->
+        <FrameLayout
+            android:id="@+id/map_container"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_gray_rounded" />
+
+        <!-- Franja horaria -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Franja horaria aproximada:"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/etInicio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Inicio"
+                android:inputType="datetime"
+                android:textAlignment="textStart"
+                android:padding="10dp"
+                android:background="@drawable/edit_text_rounded" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etFin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Fin"
+                android:textAlignment="textEnd"
+                android:inputType="datetime"
+                android:padding="10dp"
+                android:background="@drawable/edit_text_rounded" />
+        </LinearLayout>
+
+        <!-- Información adicional -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Información adicional del corte:"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/etInfo"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:gravity="top"
+            android:hint="Describa el motivo, lugar, etc."
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:background="@drawable/edit_text_rounded"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Botón guardar -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="GUARDAR"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_semibold"
+            android:background="@drawable/rounded_button_gray"
+            android:enabled="false"/><!-- habilítalo cuando se rellene todo -->
+
+    </LinearLayout>
+</ScrollView>

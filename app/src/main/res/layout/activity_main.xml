@@ -2,12 +2,11 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Fragment container -->
-
-    <!-- Menú inferior -->
+    <!-- Fragmentos: se cargan aquí -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -16,6 +15,7 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
+    <!-- Menú de navegación inferior -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

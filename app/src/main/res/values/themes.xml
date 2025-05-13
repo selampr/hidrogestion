@@ -13,7 +13,6 @@
 
         <!-- Fondo y superficie -->
         <item name="android:windowBackground">#F5F7FA</item>
-        <item name="colorBackground">#F5F7FA</item>
         <item name="colorSurface">#FFFFFF</item>
         <item name="colorOnBackground">#333333</item>
         <item name="colorOnSurface">#333333</item>
@@ -54,12 +53,11 @@
         <item name="colorSecondaryVariant">#81C784</item>
         <item name="colorOnSecondary">#000000</item>
 
-        <item name="colorBackground">#121212</item>
         <item name="colorSurface">#1E1E1E</item>
         <item name="colorOnBackground">#FFFFFF</item>
         <item name="colorOnSurface">#FFFFFF</item>
 
-        <item name="android:fontFamily">@font/poppins_font</item>
+        <item name="android:fontFamily">@font/poppins</item>
         <item name="shapeAppearanceSmallComponent">@style/Shape.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/Shape.Medium</item>
         <item name="buttonStyle">@style/Widget.HidroGestion.Button</item>
