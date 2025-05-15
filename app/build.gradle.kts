@@ -33,13 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        viewBinding = true
+    }
+
 }
 
 dependencies {
-
+    implementation(libs.material.v190)
+    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation (libs.threetenabp)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment)
@@ -47,10 +52,10 @@ dependencies {
     implementation(libs.androidx.ui.text.android)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.room.common.jvm)
-    implementation(libs.androidx.room.runtime.jvm)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.support.annotations)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.material.v190)
-
 }
