@@ -11,7 +11,10 @@ import tfg.selampr.hidrogestion.data.model.WorkerEntity
 @Dao
 interface WorkerDao {
     @Query("SELECT * FROM workers WHERE wor_use = :username AND wor_pass = :password LIMIT 1")
-    suspend fun authenticate(username: String, password: String): WorkerEntity?
+    suspend fun login(username: String, password: String): WorkerEntity?
+
+    @Query("SELECT * FROM workers WHERE wor_use = :username LIMIT 1")
+    suspend fun getWorkerByUsername(username: String): WorkerEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(worker: WorkerEntity)
@@ -20,5 +23,7 @@ interface WorkerDao {
     suspend fun getAnyWorker(): WorkerEntity?
 
     @Query("SELECT * FROM workers WHERE id = :id")
-    fun getWorkerById(id: String): Flow<WorkerEntity?>
+    fun getWorkerById(id: Int): Flow<WorkerEntity?>
+
+
 }

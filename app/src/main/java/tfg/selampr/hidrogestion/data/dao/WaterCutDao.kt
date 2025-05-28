@@ -10,8 +10,13 @@ interface WaterCutDao {
     suspend fun insertWaterCut(waterCut: WaterCutEntity): Long
 
     @Query("SELECT * FROM watercut ORDER BY wac_sta DESC")
-    fun getAllWaterCuts(): Flow<List<WaterCutEntity>>
+    suspend fun getAllWaterCuts(): List<WaterCutEntity>
 
-    @Query("SELECT * FROM watercut WHERE wac_idw = :workerId ORDER BY startTime DESC")
-    fun getWaterCutsByWorker(workerId: String): Flow<List<WaterCutEntity>>
+    @Query("SELECT * FROM watercut WHERE wac_idw = :workerId ORDER BY wac_sta DESC")
+    fun getWaterCutsByWorker(workerId: Int): List<WaterCutEntity>
+
+    @Query("SELECT * FROM watercut WHERE wacId = :id LIMIT 1")
+    suspend fun getWaterCutById(id: Int): WaterCutEntity?
+
+
 }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingTop="50dp"
     android:background="@color/blue_theme">
 
     <androidx.cardview.widget.CardView
@@ -29,8 +30,9 @@
                 android:layout_margin="8dp"
                 android:background="@color/blue_theme"
                 android:contentDescription="@string/profile_photo"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_profile"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/icono_worker"
                 app:shapeAppearanceOverlay="@style/RoundedImageStyle" />
 
             <TextView
@@ -46,7 +48,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/positionUser"
+                android:id="@+id/roleUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"

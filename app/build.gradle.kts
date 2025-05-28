@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.navigation.safe.args)
+    id("com.google.devtools.ksp") version "2.1.20-2.0.0"
+
 }
 
 android {
@@ -18,6 +22,7 @@ android {
     }
 
     buildTypes {
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -33,29 +38,91 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         viewBinding = true
     }
-
 }
 
 dependencies {
-    implementation(libs.material.v190)
-    implementation(libs.androidx.room.runtime)
+
+    implementation(libs.androidx.cardview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation (libs.threetenabp)
+    implementation(libs.androidx.material) // Material Components XML
+    implementation(libs.androidx.material3) // Material 3 Compose
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.play.services.maps)
-    implementation(libs.androidx.ui.text.android)
-    implementation(libs.androidx.ui.text.google.fonts)
-    implementation(libs.androidx.room.common.jvm)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.media3.common.ktx)
-    implementation(libs.support.annotations)
+    implementation(libs.androidx.foundation.android)
+    implementation(libs.androidx.foundation.android)
     testImplementation(libs.junit)
+    testImplementation(libs.androidx.room.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Compose
+    //noinspection BomWithoutPlatform
+    implementation(libs.androidx.compose.bom)
+    implementation (libs.androidx.activity.compose)
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+
+    // Navigation Compose
+    implementation (libs.androidx.navigation.compose)
+
+    // Coroutines
+    implementation (libs.kotlinx.coroutines.android)
+
+    // — MVVM / StateFlow —
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // — Compose UI Tooling & Preview —
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation     (libs.androidx.compose.ui.tooling.preview)
+
+    // — Room (persistencia local) —
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // — Coroutines —
+    implementation(libs.kotlinx.coroutines.android)
+
+    // — DataStore para prefs —
+    implementation(libs.androidx.datastore.preferences)
+
+    // — Seguridad: cifrado de datos sensibles —
+    implementation(libs.androidx.security.crypto)
+
+
+    //Para inyeccion de dependencias
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
+    implementation(libs.koin.android)
+
+    testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit)
+    testImplementation(kotlin("test"))
+
+    //material3
+    // en tu build.gradle (module)
+    implementation(libs.androidx.material.icons.extended)
+
+    //Gson
+    implementation(libs.gson)
+
+    implementation(libs.google.maps)
+    implementation(libs.maps.utils)
+
+    implementation(libs.javax.mail)
+    implementation(libs.activation)
+    implementation(libs.androidx.fragment)
+
+
+
+
+
 }

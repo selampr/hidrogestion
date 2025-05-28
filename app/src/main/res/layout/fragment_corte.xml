@@ -11,32 +11,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="30dp">
+        android:paddingTop="50dp">
 
         <!-- Título -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Añadir nuevo"
-            android:fontFamily="@font/poppins_light"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/btnCerrar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_close"
+            android:layout_gravity="end"
+            android:contentDescription="Cerrar"
+            android:padding="8dp" />
+
 
         <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="Añadir nuevo"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvSubtitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CORTE DE AGUA"
             android:fontFamily="@font/poppins_semibold"
             android:textSize="22sp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:textColor="@color/black" />
 
         <!-- Mapa (fragmento de Google Maps) -->
-        <FrameLayout
+        <fragment
             android:id="@+id/map_container"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/border_gray_rounded" />
 
         <!-- Franja horaria -->
@@ -62,25 +79,29 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Inicio"
-                android:inputType="datetime"
+                android:focusable="false"
+                android:clickable="true"
                 android:textAlignment="textStart"
                 android:padding="10dp"
                 android:background="@drawable/edit_text_rounded" />
-
             <Space
                 android:layout_width="8dp"
                 android:layout_height="wrap_content" />
-
             <EditText
                 android:id="@+id/etFin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Fin"
+                android:focusable="false"
+                android:clickable="true"
                 android:textAlignment="textEnd"
-                android:inputType="datetime"
                 android:padding="10dp"
                 android:background="@drawable/edit_text_rounded" />
+
+
+
+
         </LinearLayout>
 
         <!-- Información adicional -->
@@ -100,6 +121,8 @@
             android:gravity="top"
             android:hint="Describa el motivo, lugar, etc."
             android:inputType="textMultiLine"
+            android:autofillHints=""
+            android:importantForAutofill="no"
             android:padding="12dp"
             android:background="@drawable/edit_text_rounded"
             android:layout_marginBottom="16dp"/>

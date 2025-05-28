@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/blue_theme"
-    tools:context=".ui.activities.MainActivity">
+    tools:context=".ui.activities.LoginActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,52 +28,55 @@
                 android:id="@+id/logoInicio"
                 android:layout_width="284dp"
                 android:layout_height="49dp"
-                android:fontFamily="@font/poppins_semibold"
                 android:src="@drawable/logo" />
 
+            <!-- Campos comunes de login -->
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:fontFamily="@font/poppins_light"
                 android:layout_marginTop="20dp"
-                android:drawableStart="@drawable/baseline_person_24"
+                android:drawableStart="@drawable/ic_profile"
                 android:drawablePadding="8dp"
-                android:hint="@string/username"
-                android:padding="8dp"
-                android:textSize="15sp"
-                android:textColor="@color/black" />
+                android:hint="@string/usuario"
+                android:autofillHints=""
+                android:importantForAutofill="no"
+                android:drawableTint="@color/gray_theme"
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:fontFamily="@font/poppins_light"
-                android:layout_marginTop="17dp"
-                android:drawableStart="@drawable/baseline_person_24"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_lock"
                 android:drawablePadding="8dp"
-                android:hint="@string/password"
+                android:drawableTint="@color/gray_theme"
+                android:autofillHints=""
+                android:importantForAutofill="no"
+                android:hint="@string/contrase_a"
                 android:inputType="textPassword"
-                android:padding="8dp"
-                app:cornerRadius="20dp"
-                android:textSize="15sp"
-                android:textColor="@color/black" />
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="@string/login"
-                android:textSize="18sp"
-                app:cornerRadius="20dp"/>
+                android:text="@string/iniciar_sesion"
+                app:cornerRadius="20dp" />
 
+            <!-- Redirección a SignupActivity -->
+            <Button
+                android:id="@+id/signupRedirect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="¿No tienes cuenta? Regístrate"
+                app:cornerRadius="20dp" />
 
         </LinearLayout>
-
-
     </androidx.cardview.widget.CardView>
-
 
 </LinearLayout>

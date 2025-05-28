@@ -1,103 +1,93 @@
 package tfg.selampr.hidrogestion.ui.activities
 
-import tfg.selampr.hidrogestion.data.model.WorkerEntity
-
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import tfg.selampr.hidrogestion.databinding.LoginPageBinding
-import tfg.selampr.hidrogestion.ui.viewmodel.LoginViewModel
+import tfg.selampr.hidrogestion.data.dao.WorkerDao
+import tfg.selampr.hidrogestion.data.database.AppDatabase
+import tfg.selampr.hidrogestion.databinding.ActivityLoginBinding
+import tfg.selampr.hidrogestion.util.hashPassword
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: LoginPageBinding //acceder a las vistas
-    private val viewModel: LoginViewModel by viewModels() //instanciar el viewmodel
+
+
+    private lateinit var binding: ActivityLoginBinding
+    private lateinit var database: AppDatabase
+    private lateinit var workerDao: WorkerDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = LoginPageBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupObservers()
-        setupLoginButton()
+        database = AppDatabase.getInstance(this)
+        workerDao = database.workerDao()
 
-        //configura el boton de login, llama a la funcion login del viewmodel e inicializa el binding
+        binding.loginButton.setOnClickListener {
+            val loginUsername = binding.username.text.toString()
+            val loginPassword = binding.password.text.toString()
+            logIn(loginUsername, loginPassword)
+        }
+
+        binding.signupRedirect.setOnClickListener {
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
     }
 
-    private fun setupObservers() {
+    private fun logIn(username: String, password: String) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.loginState.collect { state ->
-                    when (state) {
-                        is LoginViewModel.LoginState.Idle -> Unit
-                        is LoginViewModel.LoginState.Loading -> showLoading(true)
-                        is LoginViewModel.LoginState.Success -> navigateToMain(state.worker)
-                        is LoginViewModel.LoginState.Error -> showError(state.message)
+            try {
+                // Usamos el DAO directamente
+                val worker = workerDao.getWorkerByUsername(username)
+                if (worker != null && worker.passwordHash == hashPassword(password)) {
+                    runOnUiThread {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login correcto",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
+                            putExtra("worker_id", worker.id)
+                            putExtra("worker_name", worker.name)
+                            putExtra("worker_email", worker.email)
+                            putExtra("worker_rol", worker.role)
+                            putExtra("login_time", SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()))
+
+                        }
+                        startActivity(intent)
+                        finish()
                     }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Credenciales inválidas",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Error: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
-        //observador de cambios en el estado de login
     }
 
-    private fun setupLoginButton() {
-        binding.loginButton.setOnClickListener {
-            val username = binding.username.text.toString()
-            val password = binding.password.text.toString()
-            viewModel.login(username, password)
-        }
-        //cuando se hace click se cogen los valores puestos en el edittext y llama al metodo de login
-    }
 
-    private fun showLoading(loading: Boolean) {
-        binding.apply {
-            loginButton.isEnabled = !loading
-            username.isEnabled = !loading
-            password.isEnabled = !loading
-            loginButton.text = if (loading) "Verificando..." else "Iniciar sesión"
-        }
-        //lo que se muestra mientras cara, se deshabilitan los campos y boton y cambia el texto
-    }
-
-    private fun navigateToMain(worker: WorkerEntity) {
-        startActivity(Intent(this, MainActivity::class.java).apply {
-            putExtra("worker_id", worker.id)
-            putExtra("worker_name", worker.name)
-        })
-                finish()
-
-        //crea un intent para ir a la mainactivity y pasa los datos del trabajador
-        //el finish() cierra la actividad actual para que el usuario no pueda volver a ella
-    }
-
-    private fun showError(message: String) {
-        showLoading(false)
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
-    }
-    //muestra un snackbar con el mensaje de error
 }
-
-
-//Flujo Completo
-// 1. Usuario ingresa credenciales
-//
-// 2. Al hacer click, ViewModel inicia autenticación
-//
-// 3. Activity muestra estado de carga
-//
-// 4. Si es exitoso:
-//
-//  - Navega a MainActivity
-//
-//  - Cierra LoginActivity
-//
-// 5 .Si hay error:
-//
-//  - Muestra mensaje
-//
-//  - Reactiva la UI
