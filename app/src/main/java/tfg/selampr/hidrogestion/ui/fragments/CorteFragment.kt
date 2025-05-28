@@ -26,6 +26,16 @@ import tfg.selampr.hidrogestion.utils.MailSender
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Fragmento que permite registrar un corte de agua.
+ *
+ * Funcionalidades:
+ * - Selección de zona mediante mapa (Google Maps).
+ * - Introducción de motivo y fechas.
+ * - Validación del formulario.
+ * - Envío de correos a vecinos afectados.
+ * - Guardado del corte en base de datos.
+ */
 class CorteFragment : Fragment() {
 
     private var zonaSeleccionada: String? = null
@@ -49,6 +59,7 @@ class CorteFragment : Fragment() {
 
         val corteId = arguments?.getInt("corteId") ?: -1
 
+        // Referencias a vistas del formulario
         etInicio = view.findViewById(R.id.etInicio)
         etFin = view.findViewById(R.id.etFin)
         etInfo = view.findViewById(R.id.etInfo)
@@ -58,6 +69,7 @@ class CorteFragment : Fragment() {
         val tvTitulo = view.findViewById<TextView>(R.id.tvTitulo)
         val tvSubtitulo = view.findViewById<TextView>(R.id.tvSubtitulo)
 
+        // Muestra título y subtítulo dependiendo si es edición o nuevo
         if (corteId != -1) {
             tvSubtitulo.text = "Detalle del corte ID: $corteId"
             tvTitulo.text = "DETALLES"
@@ -66,9 +78,9 @@ class CorteFragment : Fragment() {
             tvTitulo.text = "CORTE DE AGUA"
         }
 
-        configurarFechaHoraPickers()
+        configurarFechaHoraPickers() // Activa pickers de fecha/hora
 
-        // Carga del mapa
+        // Configuración del mapa
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_container)
                 as? SupportMapFragment ?: SupportMapFragment.newInstance()
 
@@ -76,15 +88,14 @@ class CorteFragment : Fragment() {
             .replace(R.id.map_container, mapFragment)
             .commit()
 
+        // Inicializa mapa y dibuja zonas
         mapFragment.getMapAsync { map ->
             googleMap = map
             cargarZonasEnMapa()
 
-            // Pinta la zona si viene de un corte ya guardado
-            zonaPendienteDeResaltar?.let { zona ->
-                resaltarZonaSeleccionada(zona)
-            }
+            zonaPendienteDeResaltar?.let { zona -> resaltarZonaSeleccionada(zona) }
 
+            // Centra el mapa en la localidad
             val centro = LatLng(41.984900, -1.270900)
             googleMap.moveCamera(
                 CameraUpdateFactory.newCameraPosition(
@@ -96,24 +107,19 @@ class CorteFragment : Fragment() {
             )
         }
 
-        btnGuardar.setOnClickListener {
-            guardarCorte()
-        }
+        // Guardar corte al pulsar botón
+        btnGuardar.setOnClickListener { guardarCorte() }
 
-        btnCerrar.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        // Cierra el fragmento
+        btnCerrar.setOnClickListener { findNavController().navigateUp() }
 
-        // Si es un corte existente, cargar datos y bloquear campos
+        // Si es corte ya existente, se cargan los datos y se bloquea el formulario
         if (corteId != -1) {
             lifecycleScope.launch {
                 val corte = AppDatabase.getInstance(requireContext()).waterCutDao().getWaterCutById(corteId)
                 corte?.let {
                     zonaSeleccionada = it.zone
-                    requireActivity().runOnUiThread {
-                        resaltarZonaSeleccionada(zonaSeleccionada!!)
-                    }
-
+                    requireActivity().runOnUiThread { resaltarZonaSeleccionada(zonaSeleccionada!!) }
 
                     etInicio.setText(it.startTime)
                     etFin.setText(it.endTime)
@@ -126,7 +132,7 @@ class CorteFragment : Fragment() {
             }
         }
 
-        // Listeners de cambios en texto
+        // Validación de formulario al escribir
         etInicio.doAfterTextChanged { validarFormulario() }
         etFin.doAfterTextChanged { validarFormulario() }
         etInfo.doAfterTextChanged { validarFormulario() }
@@ -134,6 +140,9 @@ class CorteFragment : Fragment() {
         return view
     }
 
+    /**
+     * Dibuja las zonas en el mapa como polígonos.
+     */
     private fun cargarZonasEnMapa() {
         val zonas = mapOf(
             "Zona 1" to listOf(
@@ -167,16 +176,17 @@ class CorteFragment : Fragment() {
                 PolygonOptions()
                     .addAll(puntos)
                     .strokeColor(Color.parseColor("#2D75C9"))
-                    .fillColor(Color.parseColor("#552D75C9")) // transparencia sobre tu color
+                    .fillColor(Color.parseColor("#552D75C9"))
                     .clickable(true)
             )
             polygon.tag = nombre
             zonasPoligonos[nombre] = polygon
         }
 
+        // Listener para seleccionar zona
         googleMap.setOnPolygonClickListener { polygon ->
             poligonoSeleccionado?.fillColor = Color.parseColor("#552D75C9")
-            polygon.fillColor = Color.parseColor("#883157B2") // un azul más intenso con opacidad 0x88
+            polygon.fillColor = Color.parseColor("#883157B2")
             poligonoSeleccionado = polygon
             zonaSeleccionada = polygon.tag.toString().substringAfter("Zona ").trim()
             Log.d("CorteFragment", "Zona seleccionada: $zonaSeleccionada")
@@ -184,6 +194,7 @@ class CorteFragment : Fragment() {
             validarFormulario()
         }
 
+        // Configuración visual del mapa
         googleMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
         googleMap.uiSettings.apply {
             isZoomControlsEnabled = true
@@ -194,6 +205,9 @@ class CorteFragment : Fragment() {
         }
     }
 
+    /**
+     * Resalta visualmente una zona del mapa si ya estaba seleccionada.
+     */
     private fun resaltarZonaSeleccionada(nombreZona: String) {
         val polygon = zonasPoligonos["Zona $nombreZona"] ?: return
         poligonoSeleccionado?.fillColor = Color.parseColor("#552196F3")
@@ -201,6 +215,9 @@ class CorteFragment : Fragment() {
         poligonoSeleccionado = polygon
     }
 
+    /**
+     * Valida que todos los campos estén rellenos y una zona esté seleccionada.
+     */
     private fun validarFormulario() {
         val inicio = etInicio.text.toString().trim()
         val fin = etFin.text.toString().trim()
@@ -209,6 +226,9 @@ class CorteFragment : Fragment() {
                 inicio.isNotEmpty() && fin.isNotEmpty() && info.isNotEmpty()
     }
 
+    /**
+     * Lógica para guardar un nuevo corte: validar, mostrar diálogo, enviar correos y guardar en BD.
+     */
     private fun guardarCorte() {
         val inicio = etInicio.text.toString().trim()
         val fin = etFin.text.toString().trim()
@@ -220,11 +240,9 @@ class CorteFragment : Fragment() {
         }
 
         val formato = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
-
         try {
             val fechaInicio = formato.parse(inicio)
             val fechaFin = formato.parse(fin)
-
             if (fechaInicio != null && fechaFin != null && !fechaInicio.before(fechaFin)) {
                 Toast.makeText(requireContext(), "La hora de inicio debe ser anterior a la de fin", Toast.LENGTH_LONG).show()
                 return
@@ -255,7 +273,9 @@ class CorteFragment : Fragment() {
         }
     }
 
-
+    /**
+     * Envía correos a todos los vecinos afectados.
+     */
     private suspend fun enviarCorreos(
         vecinos: List<NeighborEntity>,
         inicio: String,
@@ -293,6 +313,9 @@ class CorteFragment : Fragment() {
         }
     }
 
+    /**
+     * Guarda el corte en la base de datos y vuelve atrás.
+     */
     private fun guardarYCerrar(inicio: String, fin: String, info: String) {
         val dao = AppDatabase.getInstance(requireContext()).waterCutDao()
         lifecycleScope.launch {
@@ -309,6 +332,9 @@ class CorteFragment : Fragment() {
         }
     }
 
+    /**
+     * Configura los DatePicker y TimePicker para los campos de fecha/hora.
+     */
     private fun configurarFechaHoraPickers() {
         val formato = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
 
@@ -330,12 +356,9 @@ class CorteFragment : Fragment() {
         etInicio.setOnClickListener { mostrarDialogo(etInicio) }
         etFin.setOnClickListener { mostrarDialogo(etFin) }
 
-
         etInicio.isFocusable = false
         etInicio.isClickable = true
-
         etFin.isFocusable = false
         etFin.isClickable = true
-
     }
 }
