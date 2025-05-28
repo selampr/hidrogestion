@@ -1,15 +1,19 @@
+# Archivos y carpetas generadas por Android Studio
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+.idea/
+.gradle/
 local.properties
+
+# Compilados
+/build/
+.cxx/
+.externalNativeBuild/
+
+# Archivos de sistema
+.DS_Store
+
+# Capturas de pantalla de Android Studio
+/captures/
+
+# Carpeta del entorno virtual (si usas Python para algo)
+/venv/
