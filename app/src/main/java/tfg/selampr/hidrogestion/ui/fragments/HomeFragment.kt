@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
     private fun cargarUltimosCortes() {
         val dao = AppDatabase.getInstance(requireContext()).waterCutDao()
         lifecycleScope.launch {
-            val cortes = dao.getAllWaterCuts().take(4) // Solo los primeros 4
+            val cortes = dao.getAllWaterCuts().take(5) // Solo los ultimos 5
             adapter.setCortes(cortes)
         }
     }

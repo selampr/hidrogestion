@@ -28,6 +28,7 @@
                 android:id="@+id/logoInicio"
                 android:layout_width="284dp"
                 android:layout_height="49dp"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/logo" />
 
             <!-- Campos comunes de login -->
@@ -36,13 +37,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
+                android:contentDescription="@string/todo"
                 android:drawableStart="@drawable/ic_profile"
                 android:drawablePadding="8dp"
                 android:hint="@string/usuario"
                 android:autofillHints=""
                 android:importantForAutofill="no"
                 android:drawableTint="@color/gray_theme"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:ignore="ContentDescription" />
 
             <EditText
                 android:id="@+id/password"
@@ -73,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:text="¿No tienes cuenta? Regístrate"
+                android:text="@string/no_tienes_cuenta_reg_strate"
                 app:cornerRadius="20dp" />
 
         </LinearLayout>
